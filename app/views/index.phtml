@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php 
+            echo $this->tag->getTitle();
+            echo $this->tag->stylesheetLink('public/css/bootstrap.min.css');
+            echo $this->tag->stylesheetLink('public/css/font-awesome.min.css');
+        ?>
+        <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->url->get('/public/img/favicon.ico')?>"/>
+    </head>
+    <body>
+        <!-- Header -->
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <?= $this->tag->linkTo(["", '<i class="#" aria-hidden="true"></i> Home <span class="sr-only">(current)</span>', "class" => "nav-link"]); ?>
+                    </li>
+                    <li class="nav-item active">
+                        <?php
+                            # Check User Login
+                            if ($this->session->has('IS_LOGIN'))
+                            {
+                                echo $this->tag->linkTo([
+                                    "article/create", 
+                                    '<i class="fa fa-plus" aria-hidden="true"></i> Upload Article <span class="sr-only">(current)</span>', 
+                                    "class" => "nav-link"]
+                                );
+                            }
+                        ?>
+                    </li>
+                    <li class="nav-item active">
+                        <?php
+                            # Check User Login
+                            if ($this->session->has('IS_LOGIN'))
+                            {
+                                echo $this->tag->linkTo([
+                                    "article/manage", 
+                                    '<i class="fa fa-cogs" aria-hidden="true"></i> Manage Article', 
+                                    "class" => "nav-link"]
+                                );
+                            }
+                        ?>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <?php
+                        # Check User Login
+                        if ($this->session->has('IS_LOGIN'))
+                        {
+                            echo $this->tag->linkTo([
+                                "user/profile",
+                                '<i class="fa fa-user" aria-hidden="true"></i> Profile',
+                                "class" => "btn btn-light"
+                            ]);
+
+                            echo "&nbsp;";
+
+                            echo $this->tag->linkTo([
+                                "user/logout",
+                                '<i class="fa fa-sign-out" aria-hidden="true"></i> Logout',
+                                "class" => "btn btn-danger"
+                            ]);
+
+
+                        } else 
+                        {
+                            echo $this->tag->linkTo([
+                                "user/login",
+                                '<i class="fa fa-sign-in" aria-hidden="true"></i> Login',
+                                "class" => "btn btn-light"
+                            ]);
+                            echo "&nbsp;";
+    
+                            echo $this->tag->linkTo([
+                                "user/register",
+                                '<i class="fa fa-user-plus" aria-hidden="true"></i> Register',
+                                "class" => "btn btn-light"
+                            ]);
+                        }
+                    ?>
+                </form>
+            </div>
+        </nav>
+        <br>
+        <!-- Main Content -->
+        <?php echo $this->getContent(); ?>
+        <!-- Footer -->
+        <?php
+            echo $this->tag->javascriptInclude('public/js/jquery-3.3.1.slim.min.js');
+            echo $this->tag->javascriptInclude('public/js/popper.min.js');
+            echo $this->tag->javascriptInclude('public/js/bootstrap.min.js');
+        ?>
+    </body>
+</html>
